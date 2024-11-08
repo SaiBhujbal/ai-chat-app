@@ -5,7 +5,6 @@ import ChatSidebar from '@/components/chat/chat-sidebar';
 import ChatHeader from '@/components/chat/chat-header';
 import ChatInput from '@/components/chat/chat-input';
 import ChatMessage from '@/components/chat/chat-message';
-import Login from '@/components/Login';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -24,7 +23,6 @@ export default function Home() {
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const savedChats = localStorage.getItem('chatHistory');
@@ -153,14 +151,6 @@ export default function Home() {
     }
   };
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  if (!isLoggedIn) {
-    return <Login onLogin={handleLogin} />;
-  }
-
   return (
     <div className="flex h-screen bg-[#1a1b1e]">
       <ChatSidebar
@@ -168,7 +158,7 @@ export default function Home() {
         currentChat={currentChat}
         onSelectChat={handleSelectChat}
         onNewChat={handleNewChat}
-        onDeleteChat={handleDeleteChat}
+        onDeleteChat={handleDeleteChat} // Pass the delete handler to the sidebar
         isExpanded={isSidebarExpanded}
         onToggleExpand={() => setIsSidebarExpanded(!isSidebarExpanded)}
       />
